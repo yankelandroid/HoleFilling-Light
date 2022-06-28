@@ -55,25 +55,21 @@ class MediaManager {
             addToBorder.append(row)
         }
         
-        var pixelsCoordinates = [PixelCoordinate]()
         for i in 0..<rows {
             for j in 0..<columns {
-                pixelsCoordinates.append(PixelCoordinate(x: i, y: j))
-            }
-        }
-      
-        pixelsCoordinates.forEach { u in
-            if isInBoundary(u, rows: rows, columns: columns) {
-                let holePixel = maskGrayScale.value[u.x][u.y]
-                if holePixel.isHole() {
-                    holeBody.insert(u)
-                    let pixelsAround = getPixelsAround(coordinate: u, connectivityType: pixelConnectivity).filter({isInBoundary($0, rows: rows, columns: columns)})
-                    pixelsAround.forEach { coordinate in
-                        if isInBoundary(coordinate, rows: rows, columns: columns) {
-                            let pixel = maskGrayScale.value[coordinate.x][coordinate.y]
-                            if !pixel.isHole() && !addToBorder[coordinate.x][coordinate.y] {
-                                boundary.insert(coordinate)
-                                addToBorder[coordinate.x][coordinate.y] = true
+                let currentPixel = PixelCoordinate(x: i, y: j)
+                if isInBoundary(currentPixel, rows: rows, columns: columns) {
+                    let holePixel = maskGrayScale.value[currentPixel.x][currentPixel.y]
+                    if holePixel.isHole() {
+                        holeBody.insert(currentPixel)
+                        let pixelsAround = getPixelsAround(coordinate: currentPixel, connectivityType: pixelConnectivity).filter({isInBoundary($0, rows: rows, columns: columns)})
+                        pixelsAround.forEach { coordinate in
+                            if isInBoundary(coordinate, rows: rows, columns: columns) {
+                                let pixel = maskGrayScale.value[coordinate.x][coordinate.y]
+                                if !pixel.isHole() && !addToBorder[coordinate.x][coordinate.y] {
+                                    boundary.insert(coordinate)
+                                    addToBorder[coordinate.x][coordinate.y] = true
+                                }
                             }
                         }
                     }
