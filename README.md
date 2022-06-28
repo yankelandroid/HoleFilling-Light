@@ -20,5 +20,7 @@ assuming that the hole and boundary were already found? Try to also express the 
 
 2. Describe an algorithm that approximates the result in 𝑂(𝑛) to a high degree of accuracy.
 Bonus: implement the suggested algorithm in your library in addition to the algorithm described above.
+
+
    We need to apply the holeFilling process into each pixel by iterating over all pixels into the hole.
    So we will not use all the boundary per hole pixel only the connected pixels depending on the connectivity 
